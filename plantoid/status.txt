@@ -1,4 +1,1 @@
-fed:
-yes
-count:
-83
+status:fed:yes:count:true

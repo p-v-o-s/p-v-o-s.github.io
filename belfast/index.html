@@ -68,6 +68,40 @@ print(x.text)
 <h3>Analyzing data</h3>
 <p>An example Jupyter notebook for importing CSV data from belfast.pvos.org and plotting it is in the 'jupyter' folder in the gitlab repo -- <a href="https://gitlab.com/p-v-o-s/agroeco/belfast-feed/-/blob/master/jupyter/cross_compare.ipynb">here</a></p>
 <p><img src="/img/belfast/jupyter.png" alt=""></p>
+<h3>Mapping data</h3>
+<p>One can find a map of GPS and RSSI data at</p>
+<pre><code>&quot;http://belfast.pvos.org/data/[PUBLIC_KEY]/map
+</code></pre>
+<p>An example Python script for posting 'dummy' GPS and RSSI values can be found below.</p>
+<pre><code>import requests
+import random # only used to generate example data
+import time
+
+# credentials for belfast.pvos.org (for this particular sensor feed)
+public_key = &quot;zgbsghiskmyb&quot;
+private_key = &quot;qe296gbhpfmi&quot;
+
+# these will stay fixed:
+base_url = &quot;http://belfast.pvos.org/data/&quot;
+#base_url = &quot;http://192.168.1.163:5000/data/&quot;
+full_url = base_url+public_key
+
+# start in belfast harbor
+current_lat = 44.42849861396812
+current_lon = -69.00385950557286
+
+for i in range(0,5):
+    current_lat = current_lat + random.randint(1,10)/1000.
+    current_lon = current_lon + random.randint(1,10)/1000.
+    rssi = random.randint(30,100)*-1
+    myobj = {&quot;private_key&quot;:private_key, &quot;gps_lat&quot;:current_lat, &quot;gps_lon&quot;:current_lon, &quot;rssi&quot;:rssi}
+
+    x = requests.post(full_url, data = myobj)
+    print(myobj)
+    print(x.text)
+
+    time.sleep(1)
+</code></pre>
 
 
     </div>

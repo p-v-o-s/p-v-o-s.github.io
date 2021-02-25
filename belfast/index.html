@@ -65,7 +65,21 @@ x = requests.post(full_url, data = myobj)
 print (distance)
 print(x.text)
 </code></pre>
-<h3>Analyzing data</h3>
+<h3>Plotting data via belfast.pvos.org</h3>
+<h4>&quot;plot_param&quot;</h4>
+<p>One can determine which data parameter to plot by adding a &quot;plot_param&quot; parameter to the URL, e.g.:</p>
+<pre><code>http://belfast.pvos.org/data/gigtd8v6tnj9?plot_param=temperature_c
+</code></pre>
+<p>With no plot parameter, the default plot will be of &quot;distance_meters&quot;.</p>
+<h4>&quot;limit&quot;  One can limit the number of historical data points to plot by adding a &quot;limit&quot; parameter to the URL, e.g.:</h4>
+<pre><code>http://belfast.pvos.org/data/gigtd8v6tnj9?limit=10
+</code></pre>
+<p>By default, the latest 2000 data points will be plotted.</p>
+<h4>Combining url parameters</h4>
+<p>The above techniques can be combined. Not that the first URL parameter begins with a '?', and the following ones begin with a '&amp;', e.g.:</p>
+<pre><code>http://belfast.pvos.org/data/gigtd8v6tnj9?plot_param=temperature_c&amp;limit=10
+</code></pre>
+<h3>Analyzing data in Jupyter</h3>
 <p>An example Jupyter notebook for importing CSV data from belfast.pvos.org and plotting it is in the 'jupyter' folder in the gitlab repo -- <a href="https://gitlab.com/p-v-o-s/agroeco/belfast-feed/-/blob/master/jupyter/cross_compare.ipynb">here</a></p>
 <p><img src="/img/belfast/jupyter.png" alt=""></p>
 <h3>Mapping data</h3>

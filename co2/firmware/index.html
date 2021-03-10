@@ -22,52 +22,16 @@
         <h1></h1>
 
   
-  <h2>Using <a href="http://belfast.pvos.org">belfast.pvos.org</a></h2>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/UAZAA2opqYc" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-<h3>Creating a new data feed</h3>
-<ol>
-<li>Create a new data feed at <a href="http://belfast.pvos.org">belfast.pvos.org</a></li>
-<li>Make note of: the feed's PUBLIC_KEY and PRIVATE_KEY (e.g. copy them from the site, paste them into a local text editor)</li>
-<li>Your data is now available at &quot;http://belfast.pvos.org/data/[PUBLIC_KEY]&quot;.  See below for how to add new data.</li>
-</ol>
-<h3>Posting data</h3>
-<p>New data can be added to your feed via HTTP POST; note that you will need both the PUBLIC_KEY and PRIVATE_KEY for your feed in order to be allowed to post new data.</p>
-<p>Every POST must include the &quot;private_key&quot; field, and may additionally include any of the field names that are in the belfast.pvos.org database.</p>
-<h4>Allowed parameters</h4>
-<p>As of 24 FEB 2021, the allowed parameters in the database are the following:</p>
-<pre><code>temperature_c, humidity_rh, distance_meters, pressure_mbar, battery_volts, gps_lat, gps_lon, gps_alt, distance_meters_1, distance_meters_2, distance_meters_3, temperature_c_1, temperature_c_2, temperature_c_3, voltage_1, voltage_2, voltage_3, aux_1, aux_2, aux_3, log
-</code></pre>
-<p>And an example JSON object to send to the server sending all parameters would look like this:</p>
-<pre><code>{&quot;private_key&quot;:&quot;[PRIVATE_KEY]&quot;, &quot;temperature_c&quot;:0, &quot;humidity_rh&quot;:0, &quot;distance_meters&quot;:0, &quot;pressure_mbar&quot;:0, &quot;battery_volts&quot;:0, &quot;gps_lat&quot;:0, &quot;gps_lon&quot;:0, &quot;gps_alt&quot;:0, &quot;distance_meters_1&quot;:0, &quot;distance_meters_2&quot;:0, &quot;distance_meters_3&quot;:0, &quot;temperature_c_1&quot;:0, &quot;temperature_c_2&quot;:0, &quot;temperature_c_3&quot;:0, &quot;voltage_1&quot;:0, &quot;voltage_2&quot;:0, &quot;voltage_3&quot;:0, &quot;aux_1&quot;:0, &quot;aux_2&quot;:0, &quot;aux_3&quot;:0, &quot;log&quot;:&quot;LOG MESSAGE}
-</code></pre>
-<h4>Example Python script</h4>
-<p>Below is an example of a Python script to post a new (random) distance value to belfast.pvos.org:</p>
-<pre><code>import requests
-import random # only used to generate example data
-
-# credentials for belfast.pvos.org (for this particular sensor feed)
-public_key = &quot;[YOUR PUBLIC_KEY]&quot;
-private_key = &quot;[YOUR PRIVATE_KEY]&quot;
-
-# these will stay fixed:
-base_url = &quot;http://belfast.pvos.org/data/&quot;
-full_url = base_url+public_key
-
-# example data:
-distance = random.randint(10,20)
-
-# the JSON object we'll be POST-ing to 'full_url' ...
-# NOTE: we must include the private_key as one of the parameters;
-# and 'distance_meters' is one of several possible parameters in the postgres database.
-myobj = {&quot;private_key&quot;:private_key, &quot;distance_meters&quot;:distance}
-
-x = requests.post(full_url, data = myobj)
-print (distance)
-print(x.text)
-</code></pre>
-<h3>Analyzing data</h3>
-<p>An example Jupyter notebook for importing CSV data from belfast.pvos.org and plotting it is in the 'jupyter' folder in the gitlab repo -- <a href="https://gitlab.com/p-v-o-s/agroeco/belfast-feed/-/blob/master/jupyter/cross_compare.ipynb">here</a></p>
-<p><img src="/img/belfast/jupyter.png" alt=""></p>
+  <h2>CO2 Monitor Firmware</h2>
+<p>All firmware releases are <a href="https://gitlab.com/p-v-o-s/co2/co2monitor-firmware/-/tree/master/releases">here</a>.</p>
+<hr>
+<h3>Firmware Update -- 2021-02-25 11:48:43</h3>
+<p>Developed new firmware that attempts to handle bad / confusing wifi connections: if there is no wifi connection for several tries, or if the server replies with something other than '200' (indicating something wrong with wifi connection), then the board resets. The wifi parameters are 'hardcoded' in config.h.</p>
+<p>The firmware is available in release <a href="https://gitlab.com/p-v-o-s/co2/co2monitor-firmware/-/raw/master/releases/v0.5-alpha.zip">v0.5-alpha</a>, containing two sub-folders:</p>
+<ul>
+<li>&quot;heltec_rev_f_wifi_hardcoded&quot; -- for boards Rev_E and Rev_F (Heltec)</li>
+<li>&quot;featheresp32_rev_h_wifi_hardcoded&quot; -- for Rev_G and Rev_H (Feather ESP32).</li>
+</ul>
 
 
     </div>
